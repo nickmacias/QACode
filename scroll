@@ -1,4 +1,5 @@
 #!/bin/bash
+hahahahah
 #!
 # read current answers one line at a time
 ./current-full > .deleteme
