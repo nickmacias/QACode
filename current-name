@@ -1,0 +1,4 @@
+#!/bin/bash
+#!
+#P=/usr/local/share/QA
+cat $QAPATH/log.txt $QAPATH/qlog.txt | sort | grep "^`cat $QAPATH/rand.txt`:"

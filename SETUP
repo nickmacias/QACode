@@ -1,0 +1,8 @@
+#!/bin/bash
+#!
+#P=/usr/local/share/QA
+echo 100000 > $QAPATH/rand.txt
+cp /dev/null $QAPATH/qlog.txt
+cp /dev/null $QAPATH/question.txt
+cp /dev/null $QAPATH/log.txt
+chmod 666 $QAPATH/log.txt

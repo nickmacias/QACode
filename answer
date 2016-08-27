@@ -1,0 +1,33 @@
+#!/bin/bash
+#!
+#P=/usr/local/share/QA
+echo "The current question is:"
+echo "----------------------------------"
+cat $QAPATH/question.txt
+echo "----------------------------------"
+
+# get UID
+U=$USER
+
+# and random seed
+R=`cat $QAPATH/rand.txt`
+
+# and date
+DATE=`/bin/date +%Y%m%d%H%M%S`
+
+# see if question has been answered
+grep "$R:$U:" $QAPATH/log.txt >& /dev/null
+if  [ $? -eq 0 ]
+then
+  echo "It appears you've already answered this question."
+  exit
+fi
+
+# get answer
+echo "Enter your answer, end with ^D"
+echo "$R:$U:$DATE" > ~/.deleteme
+cat >> ~/.deleteme
+tr "\n" "\001" < ~/.deleteme | sed 's/$/\n/' >> $QAPATH/log.txt
+
+# done
+echo "Thank you, your answer has been recorded."

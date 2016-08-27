@@ -1,0 +1,13 @@
+#!/bin/bash
+#!
+# Repeatedly run the "current" command to see the current question/answers
+
+clear
+
+# loop forever
+while [ 1 -eq 1 ]
+do
+  sleep 1
+  clear
+  ./current
+done

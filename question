@@ -1,0 +1,17 @@
+#!/bin/bash
+#!
+#P=/usr/local/share/QA
+# bump the question ID
+id=`cat $QAPATH/rand.txt`
+let id=id+1
+echo $id > $QAPATH/rand.txt
+
+# read the question
+echo Enter the question, end with ^D
+cat > $QAPATH/question.txt
+DATE=`/bin/date +%Y%m%d.%H%M%S`
+echo "$id: :$DATE" > ~/.deleteme2
+cat $QAPATH/question.txt >> ~/.deleteme2
+tr "\n" "\001" < ~/.deleteme2 | sed 's/$/\n/' >> $QAPATH/qlog.txt
+#
+# done!

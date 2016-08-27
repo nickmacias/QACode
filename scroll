@@ -1,0 +1,70 @@
+#!/bin/bash
+#!
+# read current answers one line at a time
+./current-full > .deleteme
+
+# read into array
+index=0
+while read line
+do
+  array[index]="$line"
+  let index=index+1
+done < .deleteme
+
+# cleanup
+rm .deleteme
+
+# display question
+clear
+echo "*** ORIGINAL QUESTION ***"
+echo "${array[0]}" | tr "\001" "\n" | more
+# wait for keystroke
+echo -n "> spc/n/p/q"
+read -n 1
+
+# display one line at a time...
+ind=1
+
+let index=index-1
+while [ $ind -le $index ]
+do
+  clear
+
+# what are we looking at?
+  if [ $ind == 0 ]
+  then
+    echo "*** ORIGINAL QUESTION ***"
+###  elif [ $ind == $index ]
+###  then
+###    echo "*** LAST ANSWER ***"
+  else
+    echo "*** ANSWER $ind/$index ***"
+  fi
+
+# display the text
+  echo "${array[$ind]}" | tr "\001" "\n" | more
+  echo -n "> spc/n/p/q"
+  read -n 1 x
+  if [ "$x" == "" ]
+  then
+    x="n"  # next line
+  fi
+  case "$x" in
+   n) let ind=ind+1
+      if [ $ind -gt $index ]
+      then
+        let ind=index
+      fi
+     ;;
+   p) let ind=ind-1
+      if [ $ind -lt 0 ]
+      then
+        ind=0
+      fi
+      ;;
+   q) echo "";exit
+      ;;
+   *) echo "spc/n//p/q"
+      ;;
+  esac
+done
